@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="SurveyManagement.API/SurveyManagement.API.csproj" />
+  <Project Path="SurveyManagement.Application/SurveyManagement.Application.csproj" />
+  <Project Path="SurveyManagement.Domain/SurveyManagement.Domain.csproj" />
+  <Project Path="SurveyManagement.Infrastructure/SurveyManagement.Infrastructure.csproj" />
+  <Project Path="SurveyManagement.Tests/SurveyManagement.Tests.csproj" />
+</Solution>
