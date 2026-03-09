@@ -11,4 +11,9 @@
     <ProjectReference Include="..\SurveyManagement.Domain\SurveyManagement.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>
