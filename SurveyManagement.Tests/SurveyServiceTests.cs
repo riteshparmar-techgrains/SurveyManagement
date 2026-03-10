@@ -107,5 +107,18 @@ namespace SurveyManagement.Tests
             // Assert
             mockRepo.Verify(x => x.AddAsync(It.Is<Survey>(s => s.Title == "Valid Survey Title")), Times.Once);
         }
+
+        [Fact]
+        public async Task GetSurveys_Should_ReturnEmptyList_When_NoSurveysExist()
+        {
+            // Arrange
+            var mockRepo = new Mock<ISurveyRepository>();
+            mockRepo.Setup(x => x.GetAllAsync()).ReturnsAsync(new List<Survey>());
+            var service = new SurveyService(mockRepo.Object);
+            // Act
+            var surveys = await service.GetSurveysAsync();
+            // Assert
+            Assert.Empty(surveys);
+        }
     }
 }
