@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SurveyManagement.Application.DTOs;
 using SurveyManagement.Application.Interfaces;
+using SurveyManagement.Application.UseCases;
 
 namespace SurveyManagement.API.Controllers
 {
@@ -10,19 +11,28 @@ namespace SurveyManagement.API.Controllers
     public class SurveyController : ControllerBase
     {
         private readonly ISurveyService _service;
-        public SurveyController(ISurveyService service)
+        private readonly CreateSurveyUseCase _createSurveyUseCase;
+        public SurveyController(ISurveyService service, CreateSurveyUseCase createSurveyUseCase)
         {
             _service = service;
+            _createSurveyUseCase = createSurveyUseCase;
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> CreateSurvey([FromBody] CreateSurveyDto dto)
         {
             await _service.CreateSurveyAsync(dto);
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPost("CreateSurveyWithEmail")]
+        public async Task<IActionResult> CreateSurveyEmail([FromBody] CreateSurveyDto dto)
+        {
+            await _createSurveyUseCase.ExecuteAsync(dto.Title,dto.UserEmail);
+            return Ok(new { message = "Survey created successfully (mocked)" });
+        }
+
+        [HttpPost("GetSurveys")]
         public async Task<IActionResult> GetSurveys()
         {
             var surveys = await _service.GetSurveysAsync();

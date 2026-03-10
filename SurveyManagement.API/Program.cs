@@ -1,28 +1,44 @@
 using Microsoft.EntityFrameworkCore;
 using SurveyManagement.Application.Interfaces;
+using SurveyManagement.Application.UseCases;
 using SurveyManagement.Domain.Interfaces;
 using SurveyManagement.Infrastructure.Data;
+using SurveyManagement.Infrastructure.Mocks;
 using SurveyManagement.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+// Add services to the container
+builder.Services.AddControllers();
 
-// Add services to the container.
-builder.Services.AddScoped<ISurveyRepository, SurveyRepository>();
+// Database Configuration
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Dependency Injection
+builder.Services.AddScoped<ISurveyRepository, SurveyRepository>(); // ⭐ MISSING LINE
 builder.Services.AddScoped<ISurveyService, SurveyService>();
 
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddScoped<IEmailService, MockEmailService>();
+builder.Services.AddScoped<IPaymentGateway, MockPaymentGateway>();
+
+builder.Services.AddScoped<CreateSurveyUseCase>();
+
+// Swagger Configuration
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Middleware Pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Survey Management API v1");
+    });
 }
 
 app.UseHttpsRedirection();
