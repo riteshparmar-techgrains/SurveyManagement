@@ -77,5 +77,35 @@ namespace SurveyManagement.Tests
             // Act & Assert
             await Assert.ThrowsAsync<AggregateException>(() => service.CreateSurveyAsync(dto));
         }
+
+        [Fact]
+        public async Task CreateSurvey_Should_ThrowException_When_TitleIsWhitespace()
+        {
+            // Arrange
+            var mockRepo = new Mock<ISurveyRepository>();
+            var service = new SurveyService(mockRepo.Object);
+            var dto = new CreateSurveyDto
+            {
+                Title = "   "
+            };
+            // Act & Assert
+            await Assert.ThrowsAsync<AggregateException>(() => service.CreateSurveyAsync(dto));
+        }
+
+        [Fact]
+        public async Task CreateSurvey_Should_AddSurvey_WithValidTitle()
+        {
+            // Arrange
+            var mockRepo = new Mock<ISurveyRepository>();
+            var service = new SurveyService(mockRepo.Object);
+            var dto = new CreateSurveyDto
+            {
+                Title = "Valid Survey Title"
+            };
+            // Act
+            await service.CreateSurveyAsync(dto);
+            // Assert
+            mockRepo.Verify(x => x.AddAsync(It.Is<Survey>(s => s.Title == "Valid Survey Title")), Times.Once);
+        }
     }
 }
