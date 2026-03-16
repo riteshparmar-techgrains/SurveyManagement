@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,6 +17,8 @@ namespace SurveyManagement.Domain.Entities
         {
             if (string.IsNullOrWhiteSpace(title))
                 throw new AggregateException("Survey title can't be empty");
+
+            Title = title;
         }
 
         public void AddQuestion(Question question)

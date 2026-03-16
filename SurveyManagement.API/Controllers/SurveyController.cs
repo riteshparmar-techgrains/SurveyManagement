@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SurveyManagement.Application.DTOs;
 using SurveyManagement.Application.Interfaces;
@@ -16,6 +16,13 @@ namespace SurveyManagement.API.Controllers
         {
             _service = service;
             _createSurveyUseCase = createSurveyUseCase;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var surveys = await _service.GetSurveysAsync();
+            return Ok(surveys);
         }
 
         [HttpPost("Create")]

@@ -1,4 +1,4 @@
-﻿using SurveyManagement.Domain.Enums;
+using SurveyManagement.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,10 +17,10 @@ namespace SurveyManagement.Domain.Entities
             if (string.IsNullOrWhiteSpace(text))
             {
                 throw new AggregateException("Question text can't be empty");
-
-                Text = text;
-                Type = type;
             }
+
+            Text = text;
+            Type = type;
         }
     }
 }
