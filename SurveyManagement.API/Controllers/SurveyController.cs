@@ -38,17 +38,5 @@ namespace SurveyManagement.API.Controllers
             var surveys = await _service.GetSurveysAsync();
             return Ok(surveys);
         }      
-
-
-        [HttpPost("GetSurveysdetails")]
-        public async Task<IActionResult> GetSurveyss()
-        {
-            var surveys = await _service.GetSurveysAsync();
-            return Ok(surveys);
-        }      
-
-
-
-
     }
 }
