@@ -1,9 +1,8 @@
 ﻿using SurveyManagement.Application.DTOs;
 using SurveyManagement.Domain.Entities;
 using SurveyManagement.Domain.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace SurveyManagement.Application.Interfaces
 {
