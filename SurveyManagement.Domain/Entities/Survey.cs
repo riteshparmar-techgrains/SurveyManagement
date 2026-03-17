@@ -16,7 +16,7 @@ namespace SurveyManagement.Domain.Entities
         public Survey(string title)
         {
             if (string.IsNullOrWhiteSpace(title))
-                throw new AggregateException("Survey title can't be empty");
+                throw new ArgumentException("Survey title can't be empty", nameof(title));
 
             Title = title;
         }
