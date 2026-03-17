@@ -103,5 +103,16 @@ namespace SurveyManagement.Tests
             // Assert
             Assert.Empty(surveys);
         }
+
+        [Fact]
+        public async Task GetSurveys_Should_ReturnEmptyList_When_RepositoryThrowsException()
+        {
+            // Arrange
+            var mockRepo = new Mock<ISurveyRepository>();
+            mockRepo.Setup(x => x.GetAllAsync()).ThrowsAsync(new Exception("Database error"));
+            var service = new SurveyService(mockRepo.Object);
+            // Act & Assert
+            await Assert.ThrowsAsync<Exception>(() => service.GetSurveysAsync());
+        }
     }
 }
